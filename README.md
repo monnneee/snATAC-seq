@@ -8,14 +8,24 @@ This pipeline requires the following software:
 - **samtools**: >=1.12
 - **snaptools**: >=1.4.8
 
+### Additional Files
+
+To run this pipeline, you also need to download the following files provided in this GitHub repository:
+
+- **BarcodeCorrect.py**: Script for correcting barcodes.
+- **FragmentCorrect.py**: Script for correcting fragments.
+- **scATAC_v2_barcode_list.txt.gz**: Barcode whitelist file.
+
+Make sure to download these files and place them in the appropriate directory before running the pipeline.
+
 ### Usage
 
 ```bash
 threads=10 # Specify the number of threads to use
 sample="sample1" # the prefix for the FASTQ files
-BWA_index="PATH_TO_YOUR/mm10.fa"
-gsize="PATH_TO_YOUR/mm10.chrom.sizes"
-tmpfold="PATH_TO_YOUR/temp"
+BWA_index="PATH_TO_YOUR/mm10.fa" # the path of bwa index for reference genome
+gsize="PATH_TO_YOUR/mm10.chrom.sizes" # the path of genome size file
+tmpfold="PATH_TO_YOUR/temp" # temporary directory
 logfile="PATH_TO_YOUR/snaptools.log"
 outbam="PATH_TO_YOUR/${sample}.bam"
 outsnap="PATH_TO_YOUR/${sample}.snap"
