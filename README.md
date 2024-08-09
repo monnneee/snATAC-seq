@@ -54,7 +54,7 @@ python BarcodeCorrect.py  --fq ${fastq1}  -b scATAC_v2_barcode_list.txt.gz -O ba
 # Step 5: Correct fragment file barcodes
 python FragmentCorrect.py -F ${output} -C barcode_correct.txt -O ${corrected_output}
 
-# Step6: Adjust Tn5 insertion offsets
+# Step 6: Adjust Tn5 insertion offsets
 awk '{print$1,$2+4,$3-5,$4}' OFS='\t' ${corrected_output} | sort -V -k1,1 -k2,2n -T ${tmpfold} |  pbgzip -c > ${fragment_output}
 
 # Step 7: Index the corrected fragment file
