@@ -14,8 +14,8 @@ This pipeline requires the following software:
 
 To run this pipeline, you also need to download the following files provided in this GitHub repository:
 
-- **BarcodeCorrect.py**: Script for correcting barcodes.
-- **FragmentCorrect.py**: Script for correcting fragments.
+- **BarcodeCorrect.py**: Script for extracting cell barcode from read 1 and generate a barcode dictionary with up to 1 mismatch.
+- **FragmentCorrect.py**: Script for correcting barcodes of fragments.
 - **scATAC_v2_barcode_list.txt.gz**: Barcode whitelist file.
 
 Make sure to download these files and place them in the appropriate directory before running the pipeline.
