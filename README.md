@@ -1,6 +1,6 @@
 # snATAC-seq
 ## Pipeline for Split & Pool snATAC-seq Data Processing to Generate Fragment Files
-### Note: This needs to be run for each demultiplexed sample separately
+Note: process each demultiplexed sample separately
 
 ### Requirements
 
