@@ -39,21 +39,22 @@ fastq2="PATH_TO_YOUR/${sample}_R2.fastq.gz"
 # Step 1: Align paired-end reads
 snaptools align-paired-end --input-reference=${BWA_index} --input-fastq1=${fastq1} --input-fastq2=${fastq2} --output-bam=${outbam} --aligner=bwa --read-fastq-command=zcat --min-cov=0 --num-threads=${threads} --if-sort=True --tmp-folder=${tmpfold} --overwrite=TRUE
 
-# Step 2: Preprocess BAM file to generate SNAP file
+# Step 2: Generate SNAP file from BAM
 snaptools snap-pre --input-file=${outbam} --output-snap=${outsnap} --genome-name=mm10 --genome-size=${gsize} --min-mapq=10 --min-flen=0 --keep-chrm=TRUE --keep-single=False --keep-secondary=False --overwrite=True --max-num=10000000 --verbose=False
 
 # Step 3: Generate fragment file from SNAP file
 snaptools dump-fragment --snap-file=${outsnap} --output-file=${output} --buffer-size=10000 --tmp-folder=${tmpfold} &> ${logfile}
 
-# Step 4: Correct barcodes in the FASTQ files
+# Step 4: Extract cell barcode from read 1 and generate a barcode dictionary with up to 1 mismatch
 python BarcodeCorrect.py  --fq ${fastq1}  -b scATAC_v2_barcode_list.txt.gz -O barcode_correct.txt
 
-# Step 5: Correct fragment file using the corrected barcodes
+# Step 5: Correct fragment file barcodes
 python FragmentCorrect.py -F ${output} -C barcode_correct.txt -O ${corrected_output}
 
-# Step 6: Sort, compress, and index the corrected fragment file
-cat ${corrected_output} | sort -V -k1,1 -k2,2n  |  pbgzip -c > ${corrected_output}.gz
+# Step6: Adjust Tn5 insertion offsets
+awk '{print$1,$2+4,$3-5,$4}' OFS='\t' ${corrected_output} | sort -V -k1,1 -k2,2n  |  pbgzip -c > ${corrected_output}.gz
 
+# Step 7: Index the corrected fragment file
 tabix -p bed ${corrected_output}.gz
 
 # Optional: Clean up intermediate files
