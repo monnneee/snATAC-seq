@@ -22,6 +22,7 @@ Make sure to download these files and place them in the appropriate directory be
 
 ```bash
 #!/bin/bash
+
 threads=10 # Specify the number of threads to use
 sample="sample1" # the prefix for the FASTQ files
 BWA_index="PATH_TO_YOUR/mm10.fa" # the path of bwa index for reference genome
