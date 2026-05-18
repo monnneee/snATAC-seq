@@ -30,7 +30,6 @@ sample="sample1" # the prefix for the FASTQ files
 BWA_index="PATH_TO_YOUR/mm10.fa" # the path of bwa index for reference genome
 gsize="PATH_TO_YOUR/mm10.chrom.sizes" # the path of genome size file
 tmpfold="PATH_TO_YOUR/temp" # temporary directory
-logfile="PATH_TO_YOUR/snaptools.log"
 outbam="PATH_TO_YOUR/${sample}.bam"
 outsnap="PATH_TO_YOUR/${sample}.snap"
 output="PATH_TO_YOUR/${sample}.temp.tsv.gz"
@@ -46,7 +45,7 @@ snaptools align-paired-end --input-reference=${BWA_index} --input-fastq1=${fastq
 snaptools snap-pre --input-file=${outbam} --output-snap=${outsnap} --genome-name=mm10 --genome-size=${gsize} --min-mapq=10 --min-flen=0 --keep-chrm=TRUE --keep-single=False --keep-secondary=False --overwrite=True --max-num=10000000 --verbose=False
 
 # Step 3: Generate fragment file from SNAP file
-snaptools dump-fragment --snap-file=${outsnap} --output-file=${output} --buffer-size=10000 --tmp-folder=${tmpfold} &> ${logfile}
+snaptools dump-fragment --snap-file=${outsnap} --output-file=${output} --buffer-size=10000 --tmp-folder=${tmpfold}
 
 # Step 4: Extract cell barcode from read 1 and generate a barcode dictionary with up to 1 mismatch
 python BarcodeCorrect.py  --fq ${fastq1}  -b scATAC_v2_barcode_list.txt.gz -O barcode_correct.txt
